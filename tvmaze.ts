@@ -102,6 +102,7 @@ $searchForm.on("submit", async function (evt: JQuery.SubmitEvent): Promise<void>
  */
 
 async function searchForEpisodesAndDisplay(id: string): Promise<void> {
+  $episodeList.empty();
   const episodes = await getEpisodesOfShow(id);
   populateEpisodes(episodes);
 }
@@ -109,7 +110,7 @@ async function searchForEpisodesAndDisplay(id: string): Promise<void> {
 
 async function getEpisodesOfShow(id: string): Promise<Array<EpisodeInterface>> {
   let response = await axios.get(
-    `${BASE_EPISODE_API_URL}/${id}/episodes)`
+    `${BASE_EPISODE_API_URL}/${id}/episodes`
   );
 
   const episodes: Array<EpisodeInterface> = response.data.map(e => ({
@@ -141,7 +142,7 @@ function populateEpisodes(episodes: Array<EpisodeInterface>): void{
   }
 }
 
-$showsList.on("click", async function (evt: JQuery.ClickEvent): Promise<void> {
+$showsList.on("click", "button", async function (evt: JQuery.ClickEvent): Promise<void> {
   console.log('button click');
   evt.preventDefault();
   const id: string = $(evt.target).closest('.Show').attr('data-show-id');

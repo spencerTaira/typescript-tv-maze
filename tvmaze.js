@@ -12859,7 +12859,9 @@ function searchForEpisodesAndDisplay(id) {
         var episodes;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, getEpisodesOfShow(id)];
+                case 0:
+                    $episodeList.empty();
+                    return [4 /*yield*/, getEpisodesOfShow(id)];
                 case 1:
                     episodes = _a.sent();
                     populateEpisodes(episodes);
@@ -12873,7 +12875,7 @@ function getEpisodesOfShow(id) {
         var response, episodes;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, axios_1.default.get("".concat(BASE_EPISODE_API_URL, "/").concat(id, "/episodes)"))];
+                case 0: return [4 /*yield*/, axios_1.default.get("".concat(BASE_EPISODE_API_URL, "/").concat(id, "/episodes"))];
                 case 1:
                     response = _a.sent();
                     episodes = response.data.map(function (e) { return ({
@@ -12896,7 +12898,7 @@ function populateEpisodes(episodes) {
         $episodeList.append($episode);
     }
 }
-$showsList.on("click", function (evt) {
+$showsList.on("click", "button", function (evt) {
     return __awaiter(this, void 0, void 0, function () {
         var id;
         return __generator(this, function (_a) {
