@@ -12797,12 +12797,15 @@ function getShowsByTerm(term) {
                 case 1:
                     response = _a.sent();
                     console.log('RESPONSE', response);
-                    shows = response.data.map(function (s) { return ({
-                        id: s.show.id,
-                        name: s.show.name,
-                        summary: s.show.summary,
-                        image: s.show.image.medium || DEFAULT_IMAGE_URL
-                    }); });
+                    shows = response.data.map(function (s) {
+                        var _a;
+                        return ({
+                            id: s.show.id,
+                            name: s.show.name,
+                            summary: s.show.summary,
+                            image: ((_a = s.show.image) === null || _a === void 0 ? void 0 : _a.medium) || DEFAULT_IMAGE_URL
+                        });
+                    });
                     return [2 /*return*/, shows];
             }
         });

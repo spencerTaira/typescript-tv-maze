@@ -43,7 +43,7 @@ async function getShowsByTerm(term: string): Promise<Array<ShowInterface>> {
     id: s.show.id,
     name: s.show.name,
     summary: s.show.summary,
-    image: s.show.image.medium || DEFAULT_IMAGE_URL
+    image: s.show.image?.medium || DEFAULT_IMAGE_URL
   }));
 
   return shows;
