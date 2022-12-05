@@ -8,6 +8,7 @@ const $showsList: JQuery<HTMLElement> = $("#showsList");
 const $episodesArea: JQuery<HTMLElement> = $("#episodesArea");
 const $episodeList: JQuery<HTMLElement> = $("#episodesList");
 const $searchForm: JQuery<HTMLElement> = $("#searchForm");
+const $searchInput: JQuery<HTMLInputElement> = $("#searchForm-term");
 
 interface ShowInterface {
   id: number;
@@ -21,6 +22,11 @@ interface EpisodeInterface {
   name: string;
   season: number;
   number: number;
+}
+
+interface ShowInterfaceAPI {
+  score: number;
+  show: {};
 }
 
 /** Given a search term, search for tv shows that match that query.
@@ -39,7 +45,7 @@ async function getShowsByTerm(term: string): Promise<Array<ShowInterface>> {
 
   console.log('RESPONSE', response);
 
-  const shows: Array<ShowInterface> = response.data.map(s => ({
+  const shows: Array<ShowInterface> = response.data.map((s: ShowInterfaceAPI) => ({ //TODO:Make a show API interface
     id: s.show.id,
     name: s.show.name,
     summary: s.show.summary,
@@ -61,7 +67,7 @@ function populateShows(shows: Array<ShowInterface>): void {
          <div class="media">
            <img
               src=${show.image}
-              alt="Bletchly Circle San Francisco"
+              alt="Bletchly Circle San Francisco" //TODO: update to use show.name
               class="w-25 me-3">
            <div class="media-body">
              <h5 class="text-primary">${show.name}</h5>
@@ -84,8 +90,8 @@ function populateShows(shows: Array<ShowInterface>): void {
  */
 
 async function searchForShowAndDisplay(): Promise<void> {
-  const term = $("#searchForm-term").val() as string;
-  const shows = await getShowsByTerm(term);
+  const term = $searchInput.val() as string;
+  const shows = await getShowsByTerm(term); //TODO: need type
 
   $episodesArea.hide();
   populateShows(shows);
@@ -103,7 +109,7 @@ $searchForm.on("submit", async function (evt: JQuery.SubmitEvent): Promise<void>
 
 async function searchForEpisodesAndDisplay(id: string): Promise<void> {
   $episodeList.empty();
-  const episodes = await getEpisodesOfShow(id);
+  const episodes = await getEpisodesOfShow(id); //TODO: need type
   populateEpisodes(episodes);
 }
 
@@ -113,7 +119,7 @@ async function getEpisodesOfShow(id: string): Promise<Array<EpisodeInterface>> {
     `${BASE_EPISODE_API_URL}/${id}/episodes`
   );
 
-  const episodes: Array<EpisodeInterface> = response.data.map(e => ({
+  const episodes: Array<EpisodeInterface> = response.data.map(e => ({ //TODO: add a type for 'e'
     id: e.id,
     name: e.name,
     season: e.season,
